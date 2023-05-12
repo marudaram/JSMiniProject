@@ -46,7 +46,6 @@ class Obstacle1 {
         this.y = 500;
         this.width = 50;
         this.height = 60;
-
     }
     draw() {
         ctx.drawImage(img2, this.x, this.y, this.width, this.height);
@@ -83,40 +82,16 @@ function playPerFrame() {
     timer++;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    var miniCac = new Obstacle1();
+    var cactus = new Obstacle2();
     if (timer % 200 == 0) {
-
-        var miniCac = new Obstacle1();
         obstacles.push(miniCac);
-        obstacles.push(miniCac);
-
+        // obstacles.push(miniCac);
     }
 
-    if (timer % 100 == 0) {
-
-        var miniCac = new Obstacle1();
-        obstacles.push(miniCac);
-        obstacles.push(miniCac);
-
-    }
-    
     if (timer % 290 == 0) {
-        
-        var cactus = new Obstacle2();
         obstacles.push(cactus);
-        obstacles.push(cactus);
-        // obstacles.push(cactus);
-        
-        
     }
-    
-    if(timer % 150 == 0) {
-        var miniCac = new Obstacle1();
-        obstacles.push(miniCac);
-        obstacles.push(miniCac);
-
-    }
-
 
     obstacles.forEach((a, i, o) => {
         //x좌표가 0 미만이면 제거 -> 점프해서 넘어가면 사라지게끔 설정
@@ -145,10 +120,11 @@ function playPerFrame() {
     })
 
 
+
     //점프 설정
     if (jumping == true) {
         // dinoGame.classList.add("jump" );
-        mainCharacter.y -= 9;
+        mainCharacter.y -= 10;
         jumpTimer++;
     }
     if (jumping == false) {
@@ -157,7 +133,7 @@ function playPerFrame() {
             mainCharacter.y += 9;
         }
     }
-    if (jumpTimer > 20) {
+    if (jumpTimer > 23) {
         jumping = false;
         jumpTimer = 0;
     }
@@ -166,18 +142,16 @@ function playPerFrame() {
     // setTimeout(() => {
     //     dinoGame.classList.remove("jump");
     //     jumping = false;
-    // }, 3000);
+    // }, 1000);
 
     mainCharacter.draw();
 }
 
-
 playPerFrame();
 
-
 //점프중일 때 변수 선언 -> 점프하면 위로 가고 false면 아래로 가게끔 설정 
-var jumping = false;
-var stop = false;
+var jumping = false; // 공룡이 점프중인지의 여부
+var jumpCount = 0; // 스페이스바를 연속으로 누른 횟수를 저장
 
 //스페이스 바를 누르면 점프하도록 설정
 document.addEventListener('keydown', function (e) {
@@ -189,7 +163,6 @@ document.addEventListener('keydown', function (e) {
         }
     }
 });
-
 
 //충돌확인
 function crash(mainCharacter, miniCac) {
@@ -203,9 +176,9 @@ function crash(mainCharacter, miniCac) {
         gameOver.style.display = "block";
 
     }
-
-
 }
+
+
 
 function crash2(mainCharacter, cactus) {
     var xDifference2 = cactus.x - (mainCharacter.x + mainCharacter.width);
